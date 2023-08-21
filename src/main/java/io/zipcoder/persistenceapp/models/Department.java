@@ -4,21 +4,25 @@ package io.zipcoder.persistenceapp.models;
 //import javax.persistence.GeneratedValue;
 //import javax.persistence.GenerationType;
 //import javax.persistence.Id;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "dept_num")
     Long id;
     String name;
+    @OneToOne
+    @JoinColumn(name = "manager_id", referencedColumnName = "employee_id")
     Employee manager;
+//    @OneToMany(mappedBy = "employee")
+//    Set<Employee> dept_workers;
 
     public Department() {
-        this("department name", null);
+        this(null, null);
     }
 
     public Department(String name, Employee manager) {

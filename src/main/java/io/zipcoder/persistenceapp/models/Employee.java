@@ -4,10 +4,8 @@ package io.zipcoder.persistenceapp.models;
 //import javax.persistence.GeneratedValue;
 //import javax.persistence.GenerationType;
 //import javax.persistence.Id;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import java.util.Set;
 import java.util.Date;
 
 @Entity
@@ -21,14 +19,18 @@ public class Employee {
     String phone_number;
     String email;
     Date hire_date;
+    @ManyToOne
+    @JoinColumn(name = "manager_id")
     Employee manager;
-    Long department_number;
+    @ManyToOne
+//    @JoinColumn(name = "dept_num")
+    Department department;
 
     public Employee() {
-        this("first", "last", "title", "phone", "email", null, null, null);
+        this(null, null, null, null, null, null, null, null);
     }
 
-    public Employee(String first_name, String last_name, String title, String phone_number, String email, Date hire_date, Employee manager, Long department_number) {
+    public Employee(String first_name, String last_name, String title, String phone_number, String email, Date hire_date, Employee manager, Department department) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.title = title;
@@ -36,10 +38,10 @@ public class Employee {
         this.email = email;
         this.hire_date = hire_date;
         this.manager = manager;
-        this.department_number = department_number;
+        this.department = department;
     }
 
-    public Employee(Long employee_id, String first_name, String last_name, String title, String phone_number, String email, Date hire_date, Employee manager, Long department_number) {
+    public Employee(Long employee_id, String first_name, String last_name, String title, String phone_number, String email, Date hire_date, Employee manager, Department department) {
         this.employee_id = employee_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -48,7 +50,7 @@ public class Employee {
         this.email = email;
         this.hire_date = hire_date;
         this.manager = manager;
-        this.department_number = department_number;
+        this.department = department;
     }
 
     public Long getId() {
@@ -104,7 +106,12 @@ public class Employee {
     }
 
     public void setHireDate(String hire_date) {
-        this.hire_date = new Date(hire_date);
+        try {
+            this.hire_date = new Date(hire_date);
+        }
+        catch (Exception e){
+            this.hire_date = null;
+        }
     }
 
     public void setHireDate(Date hire_date) {
@@ -119,11 +126,11 @@ public class Employee {
         this.manager = manager;
     }
 
-    public Long getDepartmentNumber() {
-        return department_number;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setDepartmentNumber(Long department_number) {
-        this.department_number = department_number;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }

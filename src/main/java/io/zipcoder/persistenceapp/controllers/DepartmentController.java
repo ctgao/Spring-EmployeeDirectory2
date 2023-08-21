@@ -1,6 +1,7 @@
 package io.zipcoder.persistenceapp.controllers;
 
 import io.zipcoder.persistenceapp.models.Department;
+import io.zipcoder.persistenceapp.models.Employee;
 import io.zipcoder.persistenceapp.services.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
